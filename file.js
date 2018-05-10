@@ -4,12 +4,15 @@ const readLine=require('readline');
 var output;
 var mysql=require('mysql');
 
-var con=mysql.createConnection({
-	host:"localhost",
-	user:"sriram",
-	password:"",
 
-})
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "narutorama",
+  database: "file"
+});
+
+
 
 var rl=readLine.createInterface({
 	input:fs.createReadStream(__dirname + '/demo.txt')
@@ -24,8 +27,15 @@ rl.on('line',function(line){
 	 {
 	 	if(array[i]=='the'){
 	 		array[i]="pickcel";
-	 	}
-         toWrite+=array[i] + " ";
+	 		var sql="INSERT INTO words (word) values ('pickcel')";
+	 		con.query(sql, function (err, result) {
+    		if (err) throw err;
+    		console.log("1 record inserted");
+  });
+
+	 }
+      toWrite+=array[i] + " ";
+	 
 	 }
 console.log(toWrite);
 output.write(toWrite);
